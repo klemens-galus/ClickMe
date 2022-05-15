@@ -1,0 +1,43 @@
+<table class="table table-striped">
+  <thead>
+  <th>Pseudo</th>
+  <th>Temps moyen</th>
+  <th>Le plus rapide</th>
+  <th>Info sur les clics</th>
+
+  </thead>
+  <tbody>
+    <tr *ngFor="let score of scores$|async">
+      <td>{{score.pseudo}}</td>
+      <td>{{score.moyTime}}</td>
+      <td>{{score.bestTime}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clickInfo" (click)="showClicks(score.id)">
+          INFOS
+        </button>
+
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="clickInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Info clics </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <p *ngFor="let clic of clicScoreList$|async">{{clic.clickNumber}} - {{clic.time}} // {{clic.gameId}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+

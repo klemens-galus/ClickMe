@@ -1,14 +1,33 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { ClickmeComponent } from './clickme/clickme.component';
+import { GameComponent } from './clickme/game/game.component';
+import { HeaderComponent } from './clickme/header/header.component';
+import { ScoreComponent } from './score/score.component';
+import { NamePageComponent } from './name-page/name-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ClickmeComponent,
+    GameComponent,
+    HeaderComponent,
+    ScoreComponent,
+    NamePageComponent,
+    HomePageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
