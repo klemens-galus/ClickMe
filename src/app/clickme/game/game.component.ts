@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Observable } from 'rxjs';
 import { Game, GameApiService } from '../../game-api.service';
 import { TimerService } from '../../timer.service';
+import * as configuration from '../../../../configuration.json';
 
 export interface Click { 
   clickNumber: number,
@@ -19,8 +20,8 @@ export class GameComponent implements OnInit {
 
 
   constructor(private router: Router, private service: GameApiService, private timerService: TimerService) { }
-
-  ConfigMaxClick:number = 10; //A ajouter dans la configuration
+  config: any = configuration
+  ConfigMaxClick: number = this.config.NumberOfTarget; //A ajouter dans la configuration
   clickCount: number = 0; //Permet de calculer le nombre de clic
   bestTime: number = 999; //Meilleur temps entre 2 clic
   CurrentClick: number =0; //Temps du dernier clic
@@ -61,7 +62,7 @@ export class GameComponent implements OnInit {
         this.bestTime = this.CurrentClick
       }
     }
-    if( this.clickCount >= 10 ){ //condition d'arrêt
+    if (this.clickCount >= this.ConfigMaxClick ){ //condition d'arrêt
       this.sendScore()
     }
     this.clickCount++

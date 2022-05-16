@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
 import { GameApiService } from '../game-api.service';
+import { ConfigService } from '../config.service';
+import * as configuration from '../../../configuration.json';
+
 
 export interface Game {
   bestTime: number;
@@ -18,11 +21,12 @@ export interface Game {
 
 
 export class ScoreComponent implements OnInit {
+  config: any = configuration;
   data!: Game[]
   scores$!: Observable<Game[]> //nos scores et utilisateurs
   pages!: number[]
   currentPage: number = 1
-  configElementPage: number = 5
+  configElementPage: number = this.config.maxResultByPage
   constructor(private service: GameApiService) {
     this.scores$ = this.service.getGamesRanks()
     this.service.getGamesRanks().subscribe(res => {
@@ -35,7 +39,6 @@ export class ScoreComponent implements OnInit {
   clicScoreList$!: Observable<any[]> //tableau qui sert à laffichage des clics d'une partie
 
   ngOnInit(): void {
-    
   }
 
   showClicks(id:number) { //affichage des clics de la partie selectionnée
