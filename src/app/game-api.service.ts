@@ -22,29 +22,41 @@ export interface Clicks{
 })
 export class GameApiService {
   readonly gameApiUrl = "https://localhost:7047/api"
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getGamesRanks(): Observable<Game[]> {//Récupération de la base de donnée GAMEH trié via une map 
-    return this.http.get<Game[]>(this.gameApiUrl + '/GAMEHs').pipe(
-      map((scores: Game[]): Game[] => scores.sort((n1: Game, n2: Game): number => n1.bestTime - n2.bestTime))
+    return this._http.get<Game[]>(this.gameApiUrl + '/GAMEHs').pipe(
+      map((scores: Game[]): Game[] => scores.sort((n1: Game, n2: Game): number => n1.moyTime - n2.moyTime))
     );
   }
+  getGamesRanksById(id:number): Observable<Game> {
+    return this._http.get<Game>(this.gameApiUrl + '/GAMEHs/' + id);
+  }
+  getGamesRanksByName(user: string|null): Observable<Game[]> {//Tri plus selection de l'historique des clics par rapport à l'id de la partie
+    return this._http.get<Game[]>(this.gameApiUrl + '/GAMEHs').pipe(
+      map((scores: Game[]): Game[] => scores.sort((n1: Game, n2: Game): number => n1.moyTime - n2.moyTime)), map((scores: Game[]): Game[] => scores.filter(
+        (item: Game): boolean => item.pseudo === user))
+    )
+  }
+
   addGameRanks(data: any) {
-    return this.http.post(this.gameApiUrl + '/GAMEHs',data);
+    return this._http.post(this.gameApiUrl + '/GAMEHs',data);
   }
 
   getCurrentGames(): Observable<any[]> {//Récupération de la base de donnée GAMED
-    return this.http.get<any>(this.gameApiUrl + '/GAMEDs');
+    return this._http.get<any>(this.gameApiUrl + '/GAMEDs');
   }
 
   addCurrentGames(data: any) {
-    return this.http.post(this.gameApiUrl + '/GAMEDs', data);
+    return this._http.post(this.gameApiUrl + '/GAMEDs', data);
   } 
 
   getCurrentGamesSorted(gameId:number): Observable<Clicks[]> {//Tri plus selection de l'historique des clics par rapport à l'id de la partie
-    return this.http.get<Clicks[]>(this.gameApiUrl + '/GAMEDs').pipe(
+    return this._http.get<Clicks[]>(this.gameApiUrl + '/GAMEDs').pipe(
       map((scores: Clicks[]): Clicks[] => scores.sort((n1: Clicks, n2: Clicks): number => n1.clickNumber - n2.clickNumber)), map((scores: Clicks[]): Clicks[] => scores.filter(
         (item: Clicks): boolean => item.gameId === gameId))
     )
   }
+
+
 }

@@ -4,9 +4,11 @@ import { ClickmeComponent } from "./clickme/clickme.component";
 import { HomePageComponent } from "./home-page/home-page.component";
 import { NamePageComponent } from "./name-page/name-page.component";
 import { ScoreComponent } from "./score/score.component";
+import { EndComponent } from "./end/end.component"
 
 const routes: Routes = [
   { path: 'game', component: ClickmeComponent },
+  { path: 'endgame/:id', component: EndComponent },
   { path: 'score', component: ScoreComponent },
   { path: 'setname', component: NamePageComponent },
   { path: '', component: HomePageComponent }

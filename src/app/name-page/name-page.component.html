@@ -1,6 +1,8 @@
-<form [formGroup]="setNameForm" (ngSubmit)="setName()">
-  <label for="name">
-  Votre Nom
-  </label>
-  <input id="nameInput" type="text" formControlName="name">
-</form>
+<div id="nameForm">
+  <form [formGroup]="setNameForm" (ngSubmit)="setName()">
+    <div class="input-group flex-nowrap">
+      <span class="input-group-text" id="addon-wrapping">Entrer votre pseudo</span>
+      <input type="text" class="form-control" placeholder="Pseudo" aria-label="Pseudo" aria-describedby="addon-wrapping" formControlName="name">
+    </div>
+  </form>
+</div>

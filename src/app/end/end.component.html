@@ -1,0 +1,43 @@
+<div id="clic">
+  <h3 class="text-center">Ma dernière partie</h3>
+  <table class="table table-striped">
+    <thead>
+    <th>N° du clic</th>
+    <th>Temps</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let click of lastGameClicks$|async">
+        <td>{{click.clickNumber}}</td>
+        <td>{{click.time  / 100}} s</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div id="moyTime">
+  <p class="text-center" *ngIf="lastGame$|async as last"> Temps moyen : {{last.moyTime / 100}} secondes</p>
+</div>
+<div id="scores">
+  <h3 class="text-center">Mes parties</h3>
+  <table class="table table-striped">
+    <thead>
+    <th>Pseudo</th>
+    <th>Temps moyen</th>
+    <th>Le plus rapide</th>
+    <th>Info sur les clics</th>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let score of scores$|async">
+        <td>{{score.pseudo}}</td>
+        <td>{{score.moyTime  / 100}} s</td>
+        <td>{{score.bestTime  / 100}} s</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clickInfo">
+            INFOS
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

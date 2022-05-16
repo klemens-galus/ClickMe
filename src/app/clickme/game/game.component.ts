@@ -20,8 +20,8 @@ export class GameComponent implements OnInit {
 
 
   constructor(private router: Router, private service: GameApiService, private timerService: TimerService) { }
-  config: any = configuration
-  ConfigMaxClick: number = this.config.NumberOfTarget; //A ajouter dans la configuration
+  config: any = configuration //fichier config
+  ConfigMaxClick: number = this.config.NumberOfTarget; //récupération de la configuration
   clickCount: number = 0; //Permet de calculer le nombre de clic
   bestTime: number = 999; //Meilleur temps entre 2 clic
   CurrentClick: number =0; //Temps du dernier clic
@@ -83,7 +83,7 @@ export class GameComponent implements OnInit {
       for (var element of this.clickList) {
         element.gameId = this.gameId;
         this.service.addCurrentGames(element).subscribe({})
-        this.router.navigate(['/score'])
+        this.router.navigate(['/endgame', this.gameId])
       }
     })
     

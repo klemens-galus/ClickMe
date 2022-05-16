@@ -10,6 +10,7 @@ import { NamePageComponent } from './name-page/name-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { EndComponent } from './end/end.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     GameComponent,
     ScoreComponent,
     NamePageComponent,
-    HomePageComponent
+    HomePageComponent,
+    EndComponent
   ],
   imports: [
     BrowserModule,
