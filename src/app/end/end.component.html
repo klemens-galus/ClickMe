@@ -6,7 +6,7 @@
     <th>Temps</th>
     </thead>
     <tbody>
-      <tr *ngFor="let click of lastGameClicks$|async">
+      <tr *ngFor="let click of (lastGameClicks$|async)">
         <td>{{click.clickNumber}}</td>
         <td>{{click.time  / 100}} s</td>
       </tr>
@@ -32,7 +32,7 @@
         <td>{{score.moyTime  / 100}} s</td>
         <td>{{score.bestTime  / 100}} s</td>
         <td>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clickInfo">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clickInfo" (click)="showClicks(score.id)">
             INFOS
           </button>
 
@@ -40,4 +40,37 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="clickInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Info clics </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+          <th>Clic</th>
+          <th>Temps</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let clic of clicScoreList$|async">
+              <td>{{clic.clickNumber}}</td>
+              <td>{{clic.time / 100}} s</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
 </div>
