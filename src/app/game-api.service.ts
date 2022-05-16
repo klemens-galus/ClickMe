@@ -4,8 +4,8 @@ import { map, Observable, tap } from 'rxjs';
 
 export interface Game {
   bestTime: number;
-  MoyTime: number;
-  Pseudo: string;
+  moyTime: number;
+  pseudo: string;
   id: number;
 }
 
@@ -32,9 +32,6 @@ export class GameApiService {
   addGameRanks(data: any) {
     return this.http.post(this.gameApiUrl + '/GAMEHs',data);
   }
-  updateGameRanks(id: number, data: any) {
-    return this.http.put(this.gameApiUrl + `/GAMEHs/${id}`, data);
-  }
 
   getCurrentGames(): Observable<any[]> {//Récupération de la base de donnée GAMED
     return this.http.get<any>(this.gameApiUrl + '/GAMEDs');
@@ -44,7 +41,7 @@ export class GameApiService {
     return this.http.post(this.gameApiUrl + '/GAMEDs', data);
   } 
 
-  getCurrentGamesSorted(gameId:number): Observable<Clicks[]> {
+  getCurrentGamesSorted(gameId:number): Observable<Clicks[]> {//Tri plus selection de l'historique des clics par rapport à l'id de la partie
     return this.http.get<Clicks[]>(this.gameApiUrl + '/GAMEDs').pipe(
       map((scores: Clicks[]): Clicks[] => scores.sort((n1: Clicks, n2: Clicks): number => n1.clickNumber - n2.clickNumber)), map((scores: Clicks[]): Clicks[] => scores.filter(
         (item: Clicks): boolean => item.gameId === gameId))

@@ -19,7 +19,7 @@ export class NamePageComponent implements OnInit {
     
   }
 
-  setName() {
+  setName() { //ajout du nom dans la session de l'utilisateur et redirection vers l'accueil
     sessionStorage.setItem('name', this.setNameForm.value.name);
     this.router.navigate(['/'])
 

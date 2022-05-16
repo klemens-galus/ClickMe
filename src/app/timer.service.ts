@@ -22,12 +22,10 @@ export class TimerService {
     );
   }
   public start(): void {
-    console.log("start")
 
     this._start$.next();
   }
   public stop(): void {
-    console.log("stop")
     this._stop$.next();
   }
 }

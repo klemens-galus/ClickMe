@@ -4,17 +4,12 @@ import { Observable } from 'rxjs';
 import { Game, GameApiService } from '../../game-api.service';
 import { TimerService } from '../../timer.service';
 
-export interface Click {
+export interface Click { 
   clickNumber: number,
   time: number,
   gameId: number
 }
-const uuid = () =>
-  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-    var r = (Math.random() * 16) | 0,
-      v = c == "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -25,49 +20,48 @@ export class GameComponent implements OnInit {
 
   constructor(private router: Router, private service: GameApiService, private timerService: TimerService) { }
 
-  ConfigMaxClick:number = 10;
-  imageX!: number;
-  imageY!: number;
-  clickCount: number = 0;
-  bestTime: number = 999;
-  CurrentClick: number =0;
-  firstOne: boolean = true;
-  totalTime: number = 0;
-  clickList: Array<Click> = []
-  gameId!: number;
+  ConfigMaxClick:number = 10; //A ajouter dans la configuration
+  clickCount: number = 0; //Permet de calculer le nombre de clic
+  bestTime: number = 999; //Meilleur temps entre 2 clic
+  CurrentClick: number =0; //Temps du dernier clic
+  firstOne: boolean = true; //Correspond au premier clic (pour éviter de le comptabiliser)
+  totalTime: number = 0; //temps total de la partie
+  clickList: Array<Click> = [] //liste de tout les clics
+  gameId!: number; //Id de la partie (pour la sauvegarde des clics)
 
   ngOnInit(): void {
-
-    this.generateTarget();
-    if (sessionStorage.getItem('name') == null) {
+    confirm("Vous devez cliquer sur " + this.ConfigMaxClick + " cibles (cliquer sur la première pour commencer)") //Alerte pour donner le nombre de cibles a cliquer
+    this.generateTarget(); 
+    if (sessionStorage.getItem('name') == null) { //Si il ny a pas de session pour l'utilisateur on le revoie cree une session
       this.router.navigate(['/setname'])
     }
   }
 
   generateTarget() { //Cree de nouvelle coordonées a notre cible 
-    this.imageX = Math.round(Math.random() * (window.innerWidth - 60)) //-180 pour que l'image ne sorte pas du navigateur
-    this.imageY = Math.round(Math.random() * (window.innerHeight - 60))
-    var target = document.getElementById('target')
-    target?.setAttribute("style", "left:" + this.imageX + "px; top:" + this.imageY + "px")
+    var imageX = Math.round(Math.random() * (window.innerWidth - 60)) //-180 pour que l'image ne sorte pas du navigateur
+    var imageY = Math.round(Math.random() * (window.innerHeight - 60))
+    //Va nous permettre de cree une cible aléatoire
+    var target = document.getElementById('target') 
+    target?.setAttribute("style", "left:" + imageX + "px; top:" + imageY + "px")
+    //Permet de faire changer la barre de progression
     var progressBar = document.getElementById('progressBarGame')
     progressBar?.setAttribute("style", "width:" + this.clickCount / this.ConfigMaxClick * 100 + "%")
 
   }
-  clickCombo() {
-    this.timerService.stop();
-    this.generateTarget();
-    this.timerService.timer$.subscribe(res => {
+  clickCombo() { //Chaque clic va appeler cette méthode 
+    this.timerService.stop(); 
+    this.generateTarget(); //On regenère une cible
+    this.timerService.timer$.subscribe(res => { //récupération du temps
       this.CurrentClick = res;
-      console.log(this.CurrentClick)
     })
     if (this.clickCount >= 1) {  //On va commencer a compter les temps à partir du second clic
-      this.addClick();
+      this.addClick(); //Ajout du clic à notre tableau
       this.totalTime += this.CurrentClick
       if (this.CurrentClick < this.bestTime) {
         this.bestTime = this.CurrentClick
       }
     }
-    if( this.clickCount >= 10 ){
+    if( this.clickCount >= 10 ){ //condition d'arrêt
       this.sendScore()
     }
     this.clickCount++
@@ -75,8 +69,7 @@ export class GameComponent implements OnInit {
     
   }
 
-  sendScore() {
-    console.log(this.clickList)
+  sendScore() { //Ajout des scores / clics à la base de donné 
     var game = {
       pseudo: sessionStorage.getItem('name'),
       bestTime: this.bestTime,
@@ -95,15 +88,7 @@ export class GameComponent implements OnInit {
     
   }
 
-  addClick() {/*
-    var click = {
-      gameId: this.gameId,
-      clickNumber: this.clickCount,
-      time: this.CurrentClick
-    }
-    this.service.addCurrentGames(click).subscribe(res => {
-      console.log(res)
-    })*/
+  addClick() { //Ajout d'un clic à la liste
     var addThisClick: Click = {gameId: -1, clickNumber: this.clickCount, time: this.CurrentClick }
     this.clickList.push(addThisClick)
 
