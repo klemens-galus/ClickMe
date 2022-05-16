@@ -23,19 +23,19 @@ export interface Game {
 export class ScoreComponent implements OnInit {
   config: any = configuration; //fichier config
   scores$!: Observable<Game[]> //nos scores et utilisateurs
-  pages!: number[] //Aide a la creation des bouttons de pages
+  pages!: number[] //Aide a la creation des boutons de pages
   currentPage: number = 1 //Page des scores 
   configElementPage: number = this.config.maxResultByPage //recupération de la configuration
   constructor(private _service: GameApiService, private _router: Router) {
-    this.scores$ = this._service.getGamesRanks() //récupération de tout les scores trié
-    this._service.getGamesRanks().subscribe(res => { //permet de compter le nombre de score pour generer le bon nombre de pages
+    this.scores$ = this._service.getGamesRanks() //récupération de tous les scores triés
+    this._service.getGamesRanks().subscribe(res => { //permet de compter le nombre de scores pour générer le bon nombre de pages
       let scoresArray = res
       let numberOfScores = scoresArray.length
       this.pages = []; var i = 1; while (this.pages.push(i++) < numberOfScores / this.configElementPage);
     })
 }
   
-  clicScoreList$!: Observable<any[]> //tableau qui sert à laffichage des clics d'une partie
+  clicScoreList$!: Observable<any[]> //tableau qui sert à l'affichage des clics d'une partie
 
   ngOnInit(): void {
   }

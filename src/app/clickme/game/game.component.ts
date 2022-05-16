@@ -21,27 +21,27 @@ export class GameComponent implements OnInit {
 
   constructor(private _router: Router, private _service: GameApiService, private _timerService: TimerService) { }
   config: any = configuration //fichier config
-  ConfigMaxClick: number = this.config.NumberOfTarget; //récupération de la configuration
-  clickCount: number = 0; //Permet de calculer le nombre de clic
-  bestTime: number = 999; //Meilleur temps entre 2 clic
+  ConfigMaxClick: number = this.config.NumberOfTarget; //Récupération de la configuration
+  clickCount: number = 0; //Permet de calculer le nombre de clics
+  bestTime: number = 999; //Meilleur temps entre 2 clics
   CurrentClick: number =0; //Temps du dernier clic
-  firstOne: boolean = true; //Correspond au premier clic (pour éviter de le comptabiliser)
+  firstOne: boolean = true; //Corresponds au premier clic (pour éviter de le comptabiliser)
   totalTime: number = 0; //temps total de la partie
-  clickList: Array<Click> = [] //liste de tout les clics
+  clickList: Array<Click> = [] //liste de tous les clics
   gameId!: number; //Id de la partie (pour la sauvegarde des clics)
 
   ngOnInit(): void {
-    confirm("Vous devez cliquer sur " + this.ConfigMaxClick + " cibles (cliquer sur la première pour commencer)") //Alerte pour donner le nombre de cibles a cliquer
+    confirm("Vous devez cliquer sur " + this.ConfigMaxClick + " cibles (cliquer sur la première pour commencer)") //Alerte pour donner le nombre de cibles a cliqué
     this.generateTarget(); 
-    if (sessionStorage.getItem('name') == null) { //Si il ny a pas de session pour l'utilisateur on le revoie cree une session
+    if (sessionStorage.getItem('name') == null) { //S'il n'y n'a pas de session pour l'utilisateur, on le renvoi créer une session
       this._router.navigate(['/setname'])
     }
   }
 
-  generateTarget() { //Cree de nouvelle coordonées a notre cible 
-    let imageX = Math.round(Math.random() * (window.innerWidth - 60)) //-180 pour que l'image ne sorte pas du navigateur
-    let imageY = Math.round(Math.random() * (window.innerHeight - 60))
-    //Va nous permettre de cree une cible aléatoire
+  generateTarget() { //Cree de nouvelle coordonnées a notre cible 
+    let imageX = Math.round(Math.random() * (window.innerWidth - 100)) //-100 pour que l'image ne sorte pas du navigateur
+    let imageY = Math.round(Math.random() * (window.innerHeight - 100))
+    //Va nous permettre de creer une cible aléatoire
     let target = document.getElementById('target') 
     target?.setAttribute("style", "left:" + imageX + "px; top:" + imageY + "px")
     //Permet de faire changer la barre de progression
@@ -70,7 +70,7 @@ export class GameComponent implements OnInit {
     
   }
 
-  sendScore() { //Ajout des scores / clics à la base de donné 
+  sendScore() { //Ajout des scores / clics à la base de donnée
     let game = {
       pseudo: sessionStorage.getItem('name'),
       bestTime: this.bestTime,
