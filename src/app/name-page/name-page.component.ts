@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 })
 export class NamePageComponent implements OnInit {
 
-  setNameForm = this.formBuilder.group({
+  setNameForm = this._formBuilder.group({
     name: ''
   });
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private _formBuilder: FormBuilder, private _router: Router) { }
 
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class NamePageComponent implements OnInit {
 
   setName() { //ajout du nom dans la session de l'utilisateur et redirection vers l'accueil
     sessionStorage.setItem('name', this.setNameForm.value.name);
-    this.router.navigate(['/'])
+    this._router.navigate(['/'])
 
   }
 

@@ -8,21 +8,21 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
 
   goGame() {
-    this.router.navigate(['/game'])
+    this._router.navigate(['/game'])
   }
   goScore() {
-    this.router.navigate(['/score'])
+    this._router.navigate(['/score'])
   }
   goDisc() {
     sessionStorage.clear();
   }
   goSetName() {
-    this.router.navigate(['/setname'])
+    this._router.navigate(['/setname'])
   }
 }

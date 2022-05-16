@@ -26,11 +26,11 @@ export class ScoreComponent implements OnInit {
   pages!: number[] //Aide a la creation des bouttons de pages
   currentPage: number = 1 //Page des scores 
   configElementPage: number = this.config.maxResultByPage //recupération de la configuration
-  constructor(private service: GameApiService, private router: Router) {
-    this.scores$ = this.service.getGamesRanks() //récupération de tout les scores trié
-    this.service.getGamesRanks().subscribe(res => { //permet de compter le nombre de score pour generer le bon nombre de pages
-      var scoresArray = res
-      var numberOfScores = scoresArray.length
+  constructor(private _service: GameApiService, private _router: Router) {
+    this.scores$ = this._service.getGamesRanks() //récupération de tout les scores trié
+    this._service.getGamesRanks().subscribe(res => { //permet de compter le nombre de score pour generer le bon nombre de pages
+      let scoresArray = res
+      let numberOfScores = scoresArray.length
       this.pages = []; var i = 1; while (this.pages.push(i++) < numberOfScores / this.configElementPage);
     })
 }
@@ -41,13 +41,13 @@ export class ScoreComponent implements OnInit {
   }
 
   showClicks(id:number) { //affichage des clics de la partie selectionnée
-    this.clicScoreList$ = this.service.getCurrentGamesSorted(id)
+    this.clicScoreList$ = this._service.getCurrentGamesSorted(id)
   }
   thisPage(page: number) { //pour le changement de page
     this.currentPage = page
   }
 
   goHome() {
-    this.router.navigate(['/'])
+    this._router.navigate(['/'])
   }
 }
