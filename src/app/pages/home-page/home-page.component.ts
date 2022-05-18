@@ -13,16 +13,16 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goGame() {
+  public goGame(): void {
     this._router.navigate(['/game'])
   }
-  goScore() {
+  public goScore(): void {
     this._router.navigate(['/score'])
   }
-  goDisc() {
+  public goDisc(): void {
     sessionStorage.clear();
   }
-  goSetName() {
+  public goSetName(): void {
     this._router.navigate(['/setname'])
   }
 }
